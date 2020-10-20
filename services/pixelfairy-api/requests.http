@@ -1,0 +1,60 @@
+@host = http://0.0.0.0
+@token = 10f37828-cf89-11ea-ab34-0242ac140004
+
+### Ford Fiesta
+POST {{host}}/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "prevUrl": "https://dl.airtable.com/.attachments/728bd9375407af1a8c706926b8a507e7/dfc52e41/PL-ford_fiesta.pdf",
+    "nextUrl": "https://www.ford.nl/content/dam/guxeu/nl/documents/pricelists/cars/PL-ford_fiesta.pdf"
+}
+
+// https://pixelfairy-api.keyflight.sublayer.io/assets/test2_ec1b90f7-b9cc-4b9f-acb3-94ce9cad2dee/diff-report.html
+
+### Ford Focus
+POST {{host}}/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "prevUrl": "https://dl.airtable.com/.attachments/1cffc635d7d0c09171e4f5d06f941f42/d9113260/PL-new-ford-focus.pdf",
+    "nextUrl": "https://www.ford.nl/content/dam/guxeu/nl/documents/pricelists/cars/PL-new-ford-focus.pdf"
+}
+
+// https://pixelfairy-api.keyflight.sublayer.io/assets/test2_c20f0551-af38-4cb7-b860-a59bf459a356/diff-report.html
+
+### Opel Corsa
+POST {{host}}/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "prevUrl": "https://dl.airtable.com/.attachments/0fcf5a866b7583c666cc17c084e4e2c2/2c78b57c/mayster-prijslijst-opel-corsa-juli-2019.pdf",
+    "nextUrl": "https://view.publitas.com/62899/966253/pdfs/afe90d99-f8c7-47e1-bfd2-f7c232229309.pdf"
+}
+
+// https://pixelfairy-api.keyflight.sublayer.io/assets/test2_0b72220b-afa9-48c4-9577-fb5cd4597bc1/diff-report.html
+
+### Renault Megane
+POST {{host}}/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "prevUrl": "https://dl.airtable.com/.attachments/075c7dea296e78cf4d983ae3040d111f/3741ed89/megane-prijslijst.pdf",
+    "nextUrl": "https://cdn.group.renault.com/ren/nl/brochures-en-prijslijsten/prijslijsten/megane-prijslijst.pdf"
+}
+
+### SEAT Ibiza
+POST {{host}}/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "prevUrl": "https://dl.airtable.com/.attachments/6b22f3238508de8393d309f63b0a79a5/52135783/PrijslijstIbizaaugustus2020.pdf",
+    "nextUrl": "https://forms.seat.nl/~/media/Forms/Seat/Downloads/Ibiza/Prijslijst/SEAT%20Ibiza%20prijslijst%2010%20augustus%202020.ashx"
+}
+
+// https://pixelfairy-api.keyflight.sublayer.io/assets/test2_e24707dc-f079-4b3e-971e-854b2fbea6fc/diff-report.html
