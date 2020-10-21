@@ -1,5 +1,9 @@
 FROM cmntadmin/graphicsmagick-node
 
+RUN apk add imagemagick
+RUN apk add ghostscript
+RUN apk add poppler-utils
+
 # WORKDIR specifies the directory our
 # application's code will live within
 WORKDIR /app

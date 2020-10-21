@@ -39,7 +39,7 @@ const createJob = ({ handler, payload }) => {
         job.output.push(input)
     }
 
-    handler(job, logger)
+    handler(payload, logger)
         .then(result => {
 
             job.state = 'completed'
@@ -68,7 +68,7 @@ app.get('/jobs/:id', async (req, res) => {
     })
 })
 
-app.post('/create', bodyParser.json(), async (req, res) => {
+app.post('/jobs/create', auth, bodyParser.json(), async (req, res) => {
 
     const result = createJob({
         handler: handleCreateDiffReport,
@@ -77,6 +77,21 @@ app.post('/create', bodyParser.json(), async (req, res) => {
             nextUrl: req.body.nextUrl,
         }
     })
+
+    res.send({
+        status: 'success',
+        data: result
+    })
+})
+
+app.post('/create', auth, bodyParser.json(), async (req, res) => {
+
+    const logger = input => console.log(input)
+
+    const result = await handleCreateDiffReport({
+        prevUrl: req.body.prevUrl,
+        nextUrl: req.body.nextUrl,
+    }, logger)
 
     res.send({
         status: 'success',

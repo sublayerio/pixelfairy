@@ -68,9 +68,7 @@ const fetchFile = (url) =>
         .get(url, { responseType: "arraybuffer" })
         .then((response) => Buffer.from(response.data, "binary"));
 
-module.exports = async ({ payload }, log) => {
-    
-    const { prevUrl, nextUrl } = payload
+module.exports = async ({ prevUrl, nextUrl }, log) => {
     
     const id = uuid.v4()
     const outputPath = `${__dirname}/assets/${id}`
