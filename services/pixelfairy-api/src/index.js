@@ -75,6 +75,7 @@ app.post('/jobs/create', auth, bodyParser.json(), async (req, res) => {
         payload: {
             prevUrl: req.body.prevUrl,
             nextUrl: req.body.nextUrl,
+            convertOptions: req.body.convertOptions
         }
     })
 
@@ -91,6 +92,7 @@ app.post('/create', auth, bodyParser.json(), async (req, res) => {
     const result = await handleCreateDiffReport({
         prevUrl: req.body.prevUrl,
         nextUrl: req.body.nextUrl,
+        convertOptions: req.body.convertOptions
     }, logger)
 
     res.send({

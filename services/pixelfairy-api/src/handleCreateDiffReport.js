@@ -30,15 +30,10 @@ const createDiffImage = async ({ result }) => {
 
 const createDiffImages = ({ outputPath, results }) => results.map((result, index) => createDiffImage({ index, result, outputPath }))
 
-const createImages = async ({ filePath }) => {
+const createImages = async ({ filePath, convertOptions }) => {
 
     const pdfImage = new PDFImage(filePath, {
-        convertOptions: {
-            "-background": "white",
-            "-flatten": "",
-            "-density": process.env.CONVERT_DENSITY || "50",
-            "-quality": "100"
-        }
+        convertOptions
     })
 
     const result = await pdfImage.convertFile().catch(e => {
@@ -68,10 +63,22 @@ const fetchFile = (url) =>
         .get(url, { responseType: "arraybuffer" })
         .then((response) => Buffer.from(response.data, "binary"));
 
-module.exports = async ({ prevUrl, nextUrl }, log) => {
+module.exports = async ({ prevUrl, nextUrl, convertOptions = {} }, log) => {
+
+    const convertDensity = convertOptions.density
+
+    const _convertOptions = {
+        "-background": "white",
+        "-flatten": "",
+        "-density": convertDensity || process.env.CONVERT_DENSITY || "50",
+        "-quality": "100"
+    }
+
     
     const id = uuid.v4()
     const outputPath = `${__dirname}/assets/${id}`
+    
+    log(`[${id}] start with convertOptions: ${JSON.stringify(_convertOptions)}`)
 
     await mkdirp(outputPath)
 
@@ -107,14 +114,16 @@ module.exports = async ({ prevUrl, nextUrl }, log) => {
     log(`[${id}] create prevImages [start]`)
     const prevImages = await createImages({
         filePath: prevFilePath,
-        outputPath
+        outputPath,
+        convertOptions: _convertOptions
     })
     log(`[${id}] create prevImages [success]: ${prevImages.length} pages found`)
 
     log(`[${id}] create nextImages [start]`)
     const nextImages = await createImages({
         filePath: nextFilePath,
-        outputPath
+        outputPath,
+        convertOptions: _convertOptions
     })
     log(`[${id}] create nextImages [success]: ${nextImages.length} pages found`)
 

@@ -54,7 +54,10 @@ Authorization: Bearer {{token}}
 
 {
     "prevUrl": "https://dl.airtable.com/.attachments/6b22f3238508de8393d309f63b0a79a5/52135783/PrijslijstIbizaaugustus2020.pdf",
-    "nextUrl": "https://forms.seat.nl/~/media/Forms/Seat/Downloads/Ibiza/Prijslijst/SEAT%20Ibiza%20prijslijst%2010%20augustus%202020.ashx"
+    "nextUrl": "https://forms.seat.nl/~/media/Forms/Seat/Downloads/Ibiza/Prijslijst/SEAT%20Ibiza%20prijslijst%2010%20augustus%202020.ashx",
+    "convertOptions": {
+        "density": "10"
+    }
 }
 
 // https://pixelfairy-api.keyflight.sublayer.io/assets/test2_e24707dc-f079-4b3e-971e-854b2fbea6fc/diff-report.html
