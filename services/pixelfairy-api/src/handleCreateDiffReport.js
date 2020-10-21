@@ -42,7 +42,7 @@ const createImages = async ({ filePath }) => {
     })
 
     const result = await pdfImage.convertFile().catch(e => {
-        console.log(e)
+        log(e)
     })
 
     return result
@@ -68,9 +68,11 @@ const fetchFile = (url) =>
         .get(url, { responseType: "arraybuffer" })
         .then((response) => Buffer.from(response.data, "binary"));
 
-module.exports = async ({ prevUrl, nextUrl }) => {
-
-    const id = 'test2_' + uuid.v4()
+module.exports = async ({ payload }, log) => {
+    
+    const { prevUrl, nextUrl } = payload
+    
+    const id = uuid.v4()
     const outputPath = `${__dirname}/assets/${id}`
 
     await mkdirp(outputPath)
@@ -82,25 +84,41 @@ module.exports = async ({ prevUrl, nextUrl }) => {
         throw new Error(`Could not fetch file for field: ${field}, ${e.message}`);
     };
 
+    log(`[${id}] fetch prevUrl [start] ${prevUrl}`)
+
     const prevFile = await fetchFile(prevUrl).catch(
         createFetchFileError("prevUrl")
     );
+
+    log(`[${id}] fetch prevUrl [success] ${prevUrl}`)
+    log(`[${id}] fetch nextUrl [start] ${nextUrl}`)
+
     const nextFile = await fetchFile(nextUrl).catch(
         createFetchFileError("nextUrl")
     );
 
-    fs.writeFileSync(prevFilePath, prevFile)
-    fs.writeFileSync(nextFilePath, nextFile)
+    log(`[${id}] fetch nextUrl [success] ${nextUrl}`)
 
+    log(`[${id}] write prevFile [start] ${prevFilePath}`)
+    fs.writeFileSync(prevFilePath, prevFile)
+    log(`[${id}] write prevFile [success] ${prevFilePath}`)
+    log(`[${id}] write nextFile [start] ${nextFilePath}`)
+    fs.writeFileSync(nextFilePath, nextFile)
+    log(`[${id}] write nextFile [success] ${nextFilePath}`)
+
+    log(`[${id}] create prevImages [start]`)
     const prevImages = await createImages({
         filePath: prevFilePath,
         outputPath
     })
+    log(`[${id}] create prevImages [success]: ${prevImages.length} pages found`)
 
+    log(`[${id}] create nextImages [start]`)
     const nextImages = await createImages({
         filePath: nextFilePath,
         outputPath
     })
+    log(`[${id}] create nextImages [success]: ${nextImages.length} pages found`)
 
     const count = Math.max(prevImages.length, nextImages.length)
 
@@ -122,11 +140,13 @@ module.exports = async ({ prevUrl, nextUrl }) => {
             diffUrl
         }
     })
+    log(`[${id}] create diffImages [start] ${count} diffs to create`)
 
     await createDiffImages({
         results,
         outputPath
     })
+    log(`[${id}] create diffImages [success]`)
 
     const data = {
         diffReportPath: `${__dirname}/assets/${id}/diff-report.html`,
@@ -135,6 +155,7 @@ module.exports = async ({ prevUrl, nextUrl }) => {
     }
 
     createDiffReport(data)
+    log(`[${id}] done`)
 
     return data
 }
