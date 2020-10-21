@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const app = express()
 const auth = require('./middleware/auth')
 const handleCreateDiffReport = require('./handleCreateDiffReport')
+const createReport = require('./createReport')
 
 const PORT = process.env.PORT || 3000
 
@@ -57,6 +58,11 @@ const createJob = ({ handler, payload }) => {
 
     return job
 }
+
+app.get('/report', async (req, res) => {
+
+    res.send(createReport())
+})
 
 app.get('/jobs/:id', async (req, res) => {
 

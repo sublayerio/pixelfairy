@@ -6,6 +6,7 @@ const mkdirp = require('mkdirp')
 const PNG = require("pngjs").PNG
 const pixelmatch = require("pixelmatch")
 const times = require('lodash/times')
+const createReport = require('./createReport')
 
 const createDiffImage = async ({ result }) => {
 
@@ -45,15 +46,7 @@ const createImages = async ({ filePath, convertOptions }) => {
 
 const createDiffReport = data => {
 
-    const html = `
-        <html>
-        <body>
-            ${data.results.map(result => {
-        return `<img src="${result.diffUrl}" style="height: 100vh; max-width: 100%; margin: 0 auto; display: block;" />`
-    })}
-        </body>
-        </html>
-    `
+    const html = createReport(data)
 
     fs.writeFileSync(data.diffReportPath, html)
 }
